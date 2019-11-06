@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QVariantMap>
 #include <QJsonArray>
+#include <QTimer>
 
 #include "httprequestworker.h"
 
@@ -18,9 +19,6 @@ class qmlcontroller : public QObject
 
 public:
     explicit qmlcontroller(QObject *parent = nullptr);
-
-    // Calls the weather api.
-    Q_INVOKABLE void callApi();
 
     void setWeatherIcon(const QString &w)
     {
@@ -56,6 +54,9 @@ signals:
 
 private slots:
     void handle_result(HttpRequestWorker *worker);
+
+    // Calls the weather api.
+    void callApi();
 
 private:
     // Parses the weather api response to separate the weather data.

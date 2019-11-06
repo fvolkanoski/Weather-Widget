@@ -2,7 +2,11 @@
 
 qmlcontroller::qmlcontroller(QObject *parent) : QObject(parent)
 {
+    this->callApi();
 
+    QTimer *apiTimer = new QTimer(this);
+    connect(apiTimer, SIGNAL(timeout()), this, SLOT(callApi()));
+    apiTimer->start(10000);
 }
 
 void qmlcontroller::callApi()
@@ -63,7 +67,7 @@ void qmlcontroller::parseApiResponse(QByteArray apiResponse)
                 }
                 if(it1.key() == "temp")
                 {
-                    this->setWeatherTemperature(QString::number(it1.value().toDouble(),'g', 3));
+                    this->setWeatherTemperature(QString::number(std::floor(it1.value().toDouble())));
                 }
             }
         }
