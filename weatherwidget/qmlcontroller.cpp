@@ -11,8 +11,9 @@ void qmlcontroller::callApi()
 
     HttpRequestInput input(url_str, "GET");
 
-    input.add_var("q", "London,uk");
+    input.add_var("q", "Skopje,mk");
     input.add_var("APPID", "3f43d9bc64d2298096180a2d3f6d9965");
+    input.add_var("units", "metric");
 
     HttpRequestWorker *worker = new HttpRequestWorker(this);
     connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(handle_result(HttpRequestWorker*)));
@@ -44,14 +45,44 @@ void qmlcontroller::parseApiResponse(QByteArray apiResponse)
     QJsonDocument apiRes = QJsonDocument::fromJson(apiResponse);
 
     // Create a json object from the json document.
-    QJsonObject jObject = apiRes.object();
+    QJsonObject apiObj = apiRes.object();
+    QJsonObject::iterator apiObjIt;
 
-    QVariantMap varMap = jObject.toVariantMap();
+    for (apiObjIt = apiObj.begin(); apiObjIt != apiObj.end(); apiObjIt++)
+    {
+        if(apiObjIt.key() == "main")
+        {
+            QJsonObject o1 = apiObjIt.value().toObject();
+            QJsonObject::iterator it1 = o1.begin();
+            for(it1=o1.begin();it1!=o1.end();it1++)
+            {
+                qDebug() << " Key =" << it1.key();
+                if (it1.value().isDouble())
+                {
+                    qDebug() << " Value =" << it1.value().toDouble() <<endl;
+                }
+                if(it1.key() == "temp")
+                {
+                    this->setWeatherTemperature(QString::number(it1.value().toDouble(),'g', 3));
+                }
+            }
+        }
+        if(apiObjIt.key() == "weather")
+        {
+            QJsonArray jsonArray = apiObjIt.value().toArray();
 
-    this->setWeatherIcon(varMap.value("weather").toString());
-    qDebug() << "";
-
-    QVariant test = varMap.value("weather");
-
-   // qDebug() << test[0].
+            foreach (const QJsonValue & value, jsonArray)
+            {
+                QJsonObject obj = value.toObject();
+                qDebug() << "===================";
+                qDebug() << obj.value("description");
+                qDebug() << "===================";
+                qDebug() << obj.value("icon");
+                this->setWeatherIcon(obj.value("icon").toString());
+                qDebug() << "===================";
+                qDebug() << obj.value("main");
+                qDebug() << "===================";
+            }
+        }
+    }
 }
