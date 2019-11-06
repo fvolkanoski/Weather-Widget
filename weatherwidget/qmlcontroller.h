@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QVariantMap>
+#include <QJsonArray>
 
 #include "httprequestworker.h"
 
@@ -13,24 +14,45 @@ class qmlcontroller : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString weatherIcon READ weatherIcon WRITE setWeatherIcon NOTIFY weatherIconChanged)
+    Q_PROPERTY(QString weatherTemperature READ weatherTemperature WRITE setWeatherTemperature NOTIFY weatherTemperatureChanged)
+
 public:
     explicit qmlcontroller(QObject *parent = nullptr);
 
     // Calls the weather api.
     Q_INVOKABLE void callApi();
 
-    void setWeatherIcon(const QString &w) {
-            if (w != m_weatherIcon) {
-                m_weatherIcon = w;
-                emit weatherIconChanged();
-            }
+    void setWeatherIcon(const QString &w)
+    {
+        if (w != m_weatherIcon)
+        {
+            m_weatherIcon = w;
+            emit weatherIconChanged();
         }
-        QString weatherIcon() const {
-            return m_weatherIcon;
+    }
+
+    QString weatherIcon() const
+    {
+        return m_weatherIcon;
+    }
+
+    void setWeatherTemperature(const QString &t)
+    {
+        if (t != m_weatherTemperature)
+        {
+            m_weatherTemperature = t;
+            emit weatherTemperatureChanged();
         }
+    }
+
+    QString weatherTemperature() const
+    {
+        return m_weatherTemperature;
+    }
 
 signals:
-        void weatherIconChanged();
+    void weatherIconChanged();
+    void weatherTemperatureChanged();
 
 private slots:
     void handle_result(HttpRequestWorker *worker);
@@ -40,6 +62,7 @@ private:
     void parseApiResponse(QByteArray apiResponse);
 
     QString m_weatherIcon;
+    QString m_weatherTemperature;
 };
 
 #endif // QMLCONTROLLER_H
