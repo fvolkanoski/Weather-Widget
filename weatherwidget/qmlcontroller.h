@@ -16,10 +16,27 @@ class qmlcontroller : public QObject
     Q_OBJECT
     Q_PROPERTY(QString weatherIcon READ weatherIcon WRITE setWeatherIcon NOTIFY weatherIconChanged)
     Q_PROPERTY(QString weatherTemperature READ weatherTemperature WRITE setWeatherTemperature NOTIFY weatherTemperatureChanged)
+    Q_PROPERTY(QString city READ city WRITE setCity NOTIFY cityChanged)
 
 public:
     explicit qmlcontroller(QObject *parent = nullptr);
 
+    QString weatherIcon() const
+    {
+        return m_weatherIcon;
+    }
+
+    QString weatherTemperature() const
+    {
+        return m_weatherTemperature;
+    }
+
+    QString city() const
+    {
+        return m_city;
+    }
+
+public slots:
     void setWeatherIcon(const QString &w)
     {
         if (w != m_weatherIcon)
@@ -27,11 +44,6 @@ public:
             m_weatherIcon = w;
             emit weatherIconChanged();
         }
-    }
-
-    QString weatherIcon() const
-    {
-        return m_weatherIcon;
     }
 
     void setWeatherTemperature(const QString &t)
@@ -43,14 +55,19 @@ public:
         }
     }
 
-    QString weatherTemperature() const
+    void setCity(QString city)
     {
-        return m_weatherTemperature;
+        if (m_city == city)
+            return;
+
+        m_city = city;
+        emit cityChanged(m_city);
     }
 
 signals:
     void weatherIconChanged();
     void weatherTemperatureChanged();
+    void cityChanged(QString city);
 
 private slots:
     void handle_result(HttpRequestWorker *worker);
@@ -64,6 +81,7 @@ private:
 
     QString m_weatherIcon;
     QString m_weatherTemperature;
+    QString m_city;
 };
 
 #endif // QMLCONTROLLER_H

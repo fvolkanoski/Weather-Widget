@@ -2,6 +2,7 @@
 
 qmlcontroller::qmlcontroller(QObject *parent) : QObject(parent)
 {
+    this->setCity("Skopje,mk");
     this->callApi();
 
     QTimer *apiTimer = new QTimer(this);
@@ -15,7 +16,7 @@ void qmlcontroller::callApi()
 
     HttpRequestInput input(url_str, "GET");
 
-    input.add_var("q", "Skopje,mk");
+    input.add_var("q", this->city());
     input.add_var("APPID", "3f43d9bc64d2298096180a2d3f6d9965");
     input.add_var("units", "metric");
 

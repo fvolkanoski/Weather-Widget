@@ -146,4 +146,13 @@ Window
         color: "#0d64c8"
         font.pixelSize: 50
     }
+
+    Text {
+        id: cityName
+        text: qmlCtrl.city
+        color: "#eeeeee"
+        font.pointSize: 18
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: parent.height - 50
+    }
 }
