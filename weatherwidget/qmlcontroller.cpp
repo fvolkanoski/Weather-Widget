@@ -1,8 +1,9 @@
 #include "qmlcontroller.h"
 
-qmlcontroller::qmlcontroller(QObject *parent) : QObject(parent)
+QmlController::QmlController(QObject *parent) : QObject(parent)
 {
-    this->setCity("Skopje,mk");
+
+    this->setCity(CONSTANTS::CITY);
     this->callApi();
 
     QTimer *apiTimer = new QTimer(this);
@@ -10,7 +11,7 @@ qmlcontroller::qmlcontroller(QObject *parent) : QObject(parent)
     apiTimer->start(10000);
 }
 
-void qmlcontroller::callApi()
+void QmlController::callApi()
 {
     QString url_str = "http://api.openweathermap.org/data/2.5/weather";
 
@@ -25,7 +26,7 @@ void qmlcontroller::callApi()
     worker->execute(&input);
 }
 
-void qmlcontroller::handle_result(HttpRequestWorker *worker)
+void QmlController::handle_result(HttpRequestWorker *worker)
 {
     QString msg;
 
@@ -44,7 +45,7 @@ void qmlcontroller::handle_result(HttpRequestWorker *worker)
     qDebug() << msg;
 }
 
-void qmlcontroller::parseApiResponse(QByteArray apiResponse)
+void QmlController::parseApiResponse(QByteArray apiResponse)
 {
     // Create a json document from the api response.
     QJsonDocument apiRes = QJsonDocument::fromJson(apiResponse);
@@ -68,7 +69,7 @@ void qmlcontroller::parseApiResponse(QByteArray apiResponse)
                 }
                 if(it1.key() == "temp")
                 {
-                    this->setWeatherTemperature(QString::number(std::floor(it1.value().toDouble())));
+                    this->setWeatherTemperature(QString::number(floor(it1.value().toDouble())));
                 }
             }
         }

@@ -18,8 +18,7 @@ SOURCES += \
         main.cpp \
         qmlcontroller.cpp
 
-RESOURCES += qml.qrc \
-    img.qrc
+RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -33,5 +32,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    constants.h \
     httprequestworker.h \
     qmlcontroller.h
