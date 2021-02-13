@@ -80,14 +80,16 @@ void QmlController::parseApiResponse(QByteArray apiResponse)
             foreach (const QJsonValue & value, jsonArray)
             {
                 QJsonObject obj = value.toObject();
+                this->setWeatherIcon(obj.value("icon").toString());
+#ifdef DEBUGGING
                 qDebug() << "===================";
                 qDebug() << obj.value("description");
                 qDebug() << "===================";
                 qDebug() << obj.value("icon");
-                this->setWeatherIcon(obj.value("icon").toString());
                 qDebug() << "===================";
                 qDebug() << obj.value("main");
                 qDebug() << "===================";
+#endif
             }
         }
     }

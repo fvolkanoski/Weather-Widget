@@ -27,6 +27,7 @@ void HttpRequestInput::add_var(QString key, QString value) {
 
 void HttpRequestInput::add_file(QString variable_name, QString local_filename, QString request_filename, QString mime_type) {
     HttpRequestInputFileElement file;
+
     file.variable_name = variable_name;
     file.local_filename = local_filename;
     file.request_filename = request_filename;
