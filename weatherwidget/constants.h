@@ -3,6 +3,9 @@
 
 #include <QString>
 
+// Enable this line if you want debug output.
+#define DEBUGGING
+
 namespace CONSTANTS {
     static const QString CITY = "Skopje, MK";
 }
