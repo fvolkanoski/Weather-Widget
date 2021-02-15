@@ -10,16 +10,22 @@ Window
     width: 150
     height: 150
     title: qsTr("Weather Widget")
-    flags: Qt.Window | Qt.FramelessWindowHint
+    flags: Qt.Window | Qt.FramelessWindowHint | Qt.WA_TranslucentBackground
+    color: "#00000000"
 
     QmlController {
         id: qmlCtrl
     }
 
+    SettingsWindow{
+        id: settingsWindow
+    }
+
     Rectangle {
         id: moveRect
         anchors.fill: parent
-        color: "#ccf2f4"
+        color: settingsWindow.widgetBackgroundColor
+        opacity: settingsWindow.widgetOpacity
 
         MouseArea {
             anchors.fill: parent
@@ -33,6 +39,22 @@ Window
                 var delta = Qt.point(mouse.x-clickPos.x, mouse.y-clickPos.y)
                 widgetWindow.x += delta.x;
                 widgetWindow.y += delta.y;
+            }
+        }
+    }
+
+    Image {
+        x: 2
+        y: 2
+        source: "qrc:///img/settings.png";
+        width: 16
+        height: 16
+
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: {
+                settingsWindow.show()
             }
         }
     }
