@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>SettingsWindow.qml</file>
         <file>SmallSlider.qml</file>
+        <file>SmallTextInput.qml</file>
     </qresource>
 </RCC>

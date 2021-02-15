@@ -47,27 +47,17 @@ Window {
         text: "Background color (HEX): "
     }
 
-    Rectangle {
+    SmallTextInput {
         id: bgColorInput
         x: bgColorText.width + 10
         y: 32.5
         height: 20
         width: 160
         z: -1
-        border.width: 1
-        border.color: "black"
-        radius: 5
+        currentText: widgetBackgroundColor
 
-        TextInput {
-            text: widgetBackgroundColor
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.topMargin: 2.5
-            anchors.leftMargin: 5
-
-            onTextChanged: {
-                widgetBackgroundColor = text
-            }
+        onTextChanged: {
+            widgetBackgroundColor = text
         }
     }
 
