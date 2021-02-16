@@ -10,16 +10,22 @@ Window
     width: 150
     height: 150
     title: qsTr("Weather Widget")
-    flags: Qt.Window | Qt.FramelessWindowHint
+    flags: Qt.Window | Qt.FramelessWindowHint | Qt.WA_TranslucentBackground
+    color: "#00000000"
 
     QmlController {
         id: qmlCtrl
     }
 
+    SettingsWindow{
+        id: settingsWindow
+    }
+
     Rectangle {
         id: moveRect
         anchors.fill: parent
-        color: "#ccf2f4"
+        color: settingsWindow.widgetBackgroundColor
+        opacity: settingsWindow.widgetOpacity
 
         MouseArea {
             anchors.fill: parent
@@ -38,6 +44,22 @@ Window
     }
 
     Image {
+        x: 2
+        y: 2
+        source: "qrc:///img/settings.png";
+        width: 16
+        height: 16
+
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: {
+                settingsWindow.show()
+            }
+        }
+    }
+
+    Image {
         id: weatherIcon
         anchors.horizontalCenter: parent.horizontalCenter
         y: 10
@@ -50,14 +72,14 @@ Window
         y: 100
         text: qmlCtrl.weatherTemperature + "\xB0" + "C"
         font.bold: true
-        color: "#314e52"
+        color: settingsWindow.widgetTextColor
         font.pixelSize: 20
     }
 
     Text {
         id: cityName
         text: qmlCtrl.city
-        color: "#314e52"
+        color: settingsWindow.widgetTextColor
         font.pointSize: 10
         anchors.horizontalCenter: parent.horizontalCenter
         y: weatherTemp.y + 30
