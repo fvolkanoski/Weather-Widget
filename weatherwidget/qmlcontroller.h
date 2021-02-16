@@ -8,6 +8,7 @@
 #include <QVariantMap>
 #include <QJsonArray>
 #include <QTimer>
+#include <QWindow>
 
 #include "constants.h"
 #include "httprequestworker.h"

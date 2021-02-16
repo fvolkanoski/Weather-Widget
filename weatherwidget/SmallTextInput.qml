@@ -20,6 +20,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.topMargin: 2.5
         anchors.leftMargin: 5
+        width: smallTextInput.width
 
         onTextChanged: {
             currentText = text

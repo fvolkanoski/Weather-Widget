@@ -72,14 +72,14 @@ Window
         y: 100
         text: qmlCtrl.weatherTemperature + "\xB0" + "C"
         font.bold: true
-        color: "#314e52"
+        color: settingsWindow.widgetTextColor
         font.pixelSize: 20
     }
 
     Text {
         id: cityName
         text: qmlCtrl.city
-        color: "#314e52"
+        color: settingsWindow.widgetTextColor
         font.pointSize: 10
         anchors.horizontalCenter: parent.horizontalCenter
         y: weatherTemp.y + 30

@@ -3,6 +3,7 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
+import Weather.QmlController 1.0
 
 Window {
     id: settings
@@ -18,6 +19,7 @@ Window {
 
     property double widgetOpacity: 1.0
     property string widgetBackgroundColor : "#ccf2f4"
+    property string widgetTextColor : "#314e52"
 
     Text {
         id: bgOpacityText
@@ -61,6 +63,25 @@ Window {
         }
     }
 
+    Text {
+        id: textColorText
+        x: 10
+        y: 65
+        text: "Text color (HEX): "
+    }
 
+    SmallTextInput {
+        id: textColorInput
+        x: bgColorText.width + 10
+        y: 62.5
+        height: 20
+        width: 160
+        z: -1
+        currentText: widgetTextColor
+
+        onTextChanged: {
+            widgetTextColor = text
+        }
+    }
 }
 
